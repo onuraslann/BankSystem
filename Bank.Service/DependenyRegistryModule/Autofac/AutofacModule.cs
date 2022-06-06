@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Bank.Core.BaseRepository.Abstract;
+using Bank.DataAccess.EntityFramework.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,8 @@ namespace Bank.Service.DependenyRegistryModule.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-           builder.RegisterModule<>
+            
+                   
         }
     }
 }

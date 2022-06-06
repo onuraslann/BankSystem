@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bank.Service.Services.Concrete
+namespace Bank.Service.BaseService
 {
     public class ServiceGeneric<TEntity, TViewModel> : IServiceGeneric<TEntity, TViewModel>
       where TEntity : class where TViewModel : class

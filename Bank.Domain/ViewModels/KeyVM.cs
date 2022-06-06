@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace Bank.Domain.ViewModels
 {
-    public class EmployeeVM:IViewModel
+    public class KeyVM:IViewModel
     {
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Gender { get; set; }
-        public int Age { get; set; }
     }
 }
