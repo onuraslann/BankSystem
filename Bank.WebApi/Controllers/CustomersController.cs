@@ -11,12 +11,12 @@ namespace Bank.WebApi.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly IServiceGeneric<Customer, CustomerVM> _serviceGeneric;
+      
         private readonly ICustomerAS _customerAS;
 
-        public CustomersController(IServiceGeneric<Customer, CustomerVM> serviceGeneric, ICustomerAS customerAS)
+        public CustomersController( ICustomerAS customerAS)
         {
-            _serviceGeneric = serviceGeneric;
+            
             _customerAS = customerAS;
         }
 
@@ -44,18 +44,27 @@ namespace Bank.WebApi.Controllers
             return BadRequest(customer);
 
         }
-  
-        //[HttpPut]
-        //public async Task<IActionResult> UpdateCustomer([FromBody] CustomerVM customerVM)
-        //{
-        //    var deleteCustomer = await _serviceGeneric.Update(customerVM,customerVM.Id);
-        //    return ActionResultInstance();
-        //}
-        //[HttpDelete]
-        //public async Task<IActionResult> DeleteCustomer([FromBody]KeyVM keyVM)
-        //{
-        //    var deleteCustomer = await _customerAS.Remove(keyVM.Id);
-        //    return ActionResultInstance(deleteCustomer);
-        //}
+
+        [HttpDelete]
+        public async Task<IActionResult> UpdateCustomer([FromBody] CustomerVM customerVM)
+        {
+            var deleteCustomer = await _customerAS.Update(customerVM, customerVM.Id);
+            if (deleteCustomer.Success)
+            {
+                return Ok(deleteCustomer);
+            }
+            return BadRequest(deleteCustomer);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> DeleteCustomer([FromBody] KeyVM keyVM)
+        {
+            var deleteCustomer = await _customerAS.Remove(keyVM.Id);
+            if (deleteCustomer.Success)
+            {
+                return Ok(deleteCustomer);
+            }
+            return BadRequest(deleteCustomer);
+        }
     }
 }

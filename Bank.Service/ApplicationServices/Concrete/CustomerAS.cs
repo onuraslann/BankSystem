@@ -33,13 +33,13 @@ namespace Bank.Service.ApplicationServices.Concrete
             await _genericRepository.AddAsync(newEntity);
             await _unitOfWork.CommitAsync();
             var newDto = ObjectMapper.Mapper.Map<CustomerVM>(newEntity);
-            return new SuccessDataResult<CustomerVM>(200);
+            return new SuccessDataResult<CustomerVM>(newDto,200,Messages.CustomerAdded);
         }
 
         public async Task<IDataResult<IEnumerable<CustomerVM>>> GetAllAsync()
         {
             var entity = ObjectMapper.Mapper.Map<List<CustomerVM>>(await _genericRepository.GetListAsync());
-            return new  SuccessDataResult<IEnumerable<CustomerVM>>(200);
+            return new  SuccessDataResult<IEnumerable<CustomerVM>>(entity,200);
         }
 
         private void ValidateData(CustomerVM customerVM)
@@ -89,6 +89,30 @@ namespace Bank.Service.ApplicationServices.Concrete
             return Regex.IsMatch(lastName, @"^[a-zA-Z]+$");
         }
 
-      
+        public async Task<IDataResult<NoDataDto>> Remove(int id)
+        {
+            var deletedEntity = await _genericRepository.GetByIdAsync(id);
+            if (deletedEntity == null)
+            {
+                return new ErrorDataResult<NoDataDto>(404,Messages.IdNotFound);
+            }
+            _genericRepository.Remove(deletedEntity);
+            await _unitOfWork.CommitAsync();
+            return new SuccessDataResult<NoDataDto>(204, Messages.CustomerDeleted);
+        }
+
+        public async Task<IDataResult<NoDataDto>> Update(CustomerVM entity, int id)
+        {
+            ValidateData(entity);
+            var isExistEntity = await _genericRepository.GetByIdAsync(id);
+            if (isExistEntity == null)
+            {
+                return new ErrorDataResult<NoDataDto>(404, Messages.IdNotFound);
+            }
+            var updatedEntity = ObjectMapper.Mapper.Map<Customer>(entity);
+            _genericRepository.Update(updatedEntity);
+            await _unitOfWork.CommitAsync();
+            return new SuccessDataResult<NoDataDto>(204, Messages.CustomerUpdated);
+        }
     }
 }

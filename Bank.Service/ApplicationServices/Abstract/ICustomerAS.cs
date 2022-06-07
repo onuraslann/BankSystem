@@ -14,7 +14,9 @@ namespace Bank.Service.ApplicationServices.Abstract
 
         Task<IDataResult<IEnumerable<CustomerVM>>> GetAllAsync();
 
- 
+        Task<IDataResult<NoDataDto>> Remove(int id);
+
+        Task<IDataResult<NoDataDto>> Update(CustomerVM entity, int id);
 
     }
 }
