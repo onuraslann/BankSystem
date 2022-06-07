@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace Bank.Service.ApplicationServices.Abstract
 {
-    public interface ICustomerAS
+    public interface IEmployeeAS
     {
-        Task<IDataResult<CustomerVM>> AddAsync(CustomerVM entity);
+        Task<IDataResult<EmployeeVM>> AddAsync(EmployeeVM entity);
 
-        Task<IDataResult<IEnumerable<CustomerVM>>> GetAllAsync();
+        Task<IDataResult<IEnumerable<EmployeeVM>>> GetAllAsync();
 
- 
 
     }
 }

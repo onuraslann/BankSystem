@@ -9,7 +9,7 @@ namespace Bank.WebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class CustomersController : BaseController
+    public class CustomersController : ControllerBase
     {
         private readonly IServiceGeneric<Customer, CustomerVM> _serviceGeneric;
         private readonly ICustomerAS _customerAS;
@@ -24,28 +24,38 @@ namespace Bank.WebApi.Controllers
         public async Task<IActionResult> GetCustomerList()
         {
             var customer = await _customerAS.GetAllAsync();
-            return ActionResultInstance(customer);
+            if (customer.Success)
+            {
+                return Ok(customer);
+            }
+            return BadRequest(customer);
 
         }
 
         [HttpPost]
-        public async Task<IActionResult> SetCustomer([FromBody]CustomerVM customerVM)
+        public async Task<IActionResult> SetCustomer([FromBody] CustomerVM customerVM)
         {
-          
-            return ActionResultInstance(await _customerAS.AddAsync(customerVM));
+            var customer = await _customerAS.AddAsync(customerVM);
+
+            if (customer.Success)
+            {
+                return Ok(customer);
+            }
+            return BadRequest(customer);
 
         }
-        [HttpPut]
-        public async Task<IActionResult> UpdateCustomer([FromBody] CustomerVM customerVM)
-        {
-            var deleteCustomer = await _serviceGeneric.Update(customerVM,customerVM.Id);
-            return ActionResultInstance(deleteCustomer);
-        }
-        [HttpDelete]
-        public async Task<IActionResult> DeleteCustomer([FromBody]KeyVM keyVM)
-        {
-            var deleteCustomer = await _serviceGeneric.Remove(keyVM.Id);
-            return ActionResultInstance(deleteCustomer);
-        }
+  
+        //[HttpPut]
+        //public async Task<IActionResult> UpdateCustomer([FromBody] CustomerVM customerVM)
+        //{
+        //    var deleteCustomer = await _serviceGeneric.Update(customerVM,customerVM.Id);
+        //    return ActionResultInstance();
+        //}
+        //[HttpDelete]
+        //public async Task<IActionResult> DeleteCustomer([FromBody]KeyVM keyVM)
+        //{
+        //    var deleteCustomer = await _customerAS.Remove(keyVM.Id);
+        //    return ActionResultInstance(deleteCustomer);
+        //}
     }
 }

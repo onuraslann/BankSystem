@@ -10,15 +10,15 @@ namespace Bank.Core.BaseRepository.Abstract
 {
     public interface IServiceGeneric<TEntity, TViewModel> where TEntity : class where TViewModel : class
     {
-        Task<Response<TViewModel>> GetByIdAsync(int id);
-        Task<Response<IEnumerable<TViewModel>>> GetAllAsync();
+        Task<IDataResult<TViewModel>> GetByIdAsync(int id);
+        Task<IDataResult<IEnumerable<TViewModel>>> GetAllAsync();
 
-        Task<Response<IQueryable<TViewModel>>> Where(Expression<Func<TEntity, bool>> expression);
+        Task<IDataResult<IQueryable<TViewModel>>> Where(Expression<Func<TEntity, bool>> expression);
 
-        Task<Response<TViewModel>> AddAsync(TViewModel entity);
+        Task<IDataResult<TViewModel>> AddAsync(TViewModel entity);
 
-        Task<Response<NoDataDto>> Remove(int id);
+        Task<IDataResult<NoDataDto>> Remove(int id);
 
-        Task<Response<NoDataDto>> Update(TViewModel entity, int id);
+        Task<IDataResult<NoDataDto>> Update(TViewModel entity, int id);
     }
 }

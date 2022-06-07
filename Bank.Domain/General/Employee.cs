@@ -14,7 +14,7 @@ namespace Bank.Domain.General
         public string LastName { get; set; }
         public string Gender { get; set; }
         public int Age { get; set; }
-        public int Wage { get; set; }
-        public Nullable<Double> Budget { get; set; }
+   
+        public Nullable<Double> Wage { get; set; }
     }
 }

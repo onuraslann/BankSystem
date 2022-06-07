@@ -4,6 +4,7 @@ using Bank.DataAccess.UnitOfWork;
 using Bank.Domain.General;
 using Bank.Domain.ViewModels;
 using Bank.Service.ApplicationServices.Abstract;
+using Bank.Service.Constants;
 using Bank.Service.Profiles;
 using System;
 using System.Collections.Generic;
@@ -17,28 +18,28 @@ namespace Bank.Service.ApplicationServices.Concrete
     public class CustomerAS : ICustomerAS
     {
         private readonly IUnitOfWork _unitOfWork;
-
+        private readonly IGenericRepository<Customer> _genericRepository;
         public CustomerAS(IGenericRepository<Customer> genericRepository, IUnitOfWork unitOfWork)
         {
             _genericRepository = genericRepository;
             _unitOfWork = unitOfWork;
         }
 
-        private readonly IGenericRepository<Customer> _genericRepository;
-        public async Task<Response<CustomerVM>> AddAsync(CustomerVM entity)
+      
+        public async Task<IDataResult<CustomerVM>> AddAsync(CustomerVM entity)
         {
             ValidateData(entity);
             var newEntity = ObjectMapper.Mapper.Map<Customer>(entity);
             await _genericRepository.AddAsync(newEntity);
             await _unitOfWork.CommitAsync();
             var newDto = ObjectMapper.Mapper.Map<CustomerVM>(newEntity);
-            return Response<CustomerVM>.SuccessResponse(newDto, 200);
+            return new SuccessDataResult<CustomerVM>(200);
         }
 
-        public async Task<Response<IEnumerable<CustomerVM>>> GetAllAsync()
+        public async Task<IDataResult<IEnumerable<CustomerVM>>> GetAllAsync()
         {
             var entity = ObjectMapper.Mapper.Map<List<CustomerVM>>(await _genericRepository.GetListAsync());
-            return Response<IEnumerable<CustomerVM>>.SuccessResponse(entity, 200);
+            return new  SuccessDataResult<IEnumerable<CustomerVM>>(200);
         }
 
         private void ValidateData(CustomerVM customerVM)
@@ -87,5 +88,7 @@ namespace Bank.Service.ApplicationServices.Concrete
         {
             return Regex.IsMatch(lastName, @"^[a-zA-Z]+$");
         }
+
+      
     }
 }
