@@ -16,6 +16,8 @@ namespace Bank.Domain.General
         public string Gender { get; set; }
         public int Age { get; set; }
         public string CustomerType { get; set; }
+
+        public string PhoneNumber { get; set; }
         public virtual ICollection<Credit> Credits { get; set; } //Birtane müşteri birden fazla karta sahip olabilir 
     }
 }

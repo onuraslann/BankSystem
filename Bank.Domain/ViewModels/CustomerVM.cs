@@ -16,6 +16,7 @@ namespace Bank.Domain.ViewModels
         public string Gender { get; set; }
         public int Age { get; set; }
         public string CustomerType { get; set; }
+        public string PhoneNumber { get; set; }
 
 
 
