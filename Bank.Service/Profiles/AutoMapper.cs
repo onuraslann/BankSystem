@@ -15,7 +15,12 @@ namespace Bank.Service.Profiles
         {
             CreateMap<CustomerVM, Customer>().ReverseMap();
             CreateMap<CreditVM, Credit>().ReverseMap(); 
-            CreateMap<EmployeeVM, Employee>().ReverseMap(); 
+            CreateMap<EmployeeVM, Employee>().ReverseMap();
+            CreateMap<GetListCreditVM, Credit>().ReverseMap();
+
+            CreateMap<GetListCustomerVM, Customer>().ReverseMap();
+
+            CreateMap<GetEmployeeListVM, Employee>().ReverseMap();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Bank.Service.BaseService
             _unitOfWork = unitOfWork;
             _genericRepository = genericRepository;
         }
-
+        
         public async Task<IDataResult<TViewModel>> AddAsync(TViewModel entity)
         {
             var newEntity = ObjectMapper.Mapper.Map<TEntity>(entity);

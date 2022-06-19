@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Bank.Domain.ViewModels
 {
-    public class CreditVM:IViewModel
+    public class GetListCreditVM:IViewModel
     {
-     
+        public int Id { get; set; }
         public int CustomerId { get; set; }
-       public string CreditType { get; set; }
+        public string CreditType { get; set; }
         public int MinBudget { get; set; }
         public int MaxBudget { get; set; }
         public short MinLoanterm { get; set; }

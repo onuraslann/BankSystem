@@ -12,7 +12,7 @@ namespace Bank.Service.ApplicationServices.Abstract
     {
         Task<IDataResult<CustomerVM>> AddAsync(CustomerVM entity);
 
-        Task<IDataResult<IEnumerable<CustomerVM>>> GetAllAsync();
+        Task<IDataResult<IEnumerable<GetListCustomerVM>>> GetAllAsync();
 
         Task<IDataResult<NoDataDto>> Remove(int id);
 

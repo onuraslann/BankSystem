@@ -36,10 +36,10 @@ namespace Bank.Service.ApplicationServices.Concrete
             return new SuccessDataResult<CustomerVM>(newDto,200,Messages.CustomerAdded);
         }
 
-        public async Task<IDataResult<IEnumerable<CustomerVM>>> GetAllAsync()
+        public async Task<IDataResult<IEnumerable<GetListCustomerVM>>> GetAllAsync()
         {
-            var entity = ObjectMapper.Mapper.Map<List<CustomerVM>>(await _genericRepository.GetListAsync());
-            return new  SuccessDataResult<IEnumerable<CustomerVM>>(entity,200);
+            var entity = ObjectMapper.Mapper.Map<List<GetListCustomerVM>>(await _genericRepository.GetListAsync());
+            return new  SuccessDataResult<IEnumerable<GetListCustomerVM>>(entity,200);
         }
 
         private void ValidateData(CustomerVM customerVM)
@@ -94,7 +94,7 @@ namespace Bank.Service.ApplicationServices.Concrete
             var deletedEntity = await _genericRepository.GetByIdAsync(id);
             if (deletedEntity == null)
             {
-                return new ErrorDataResult<NoDataDto>(404,Messages.IdNotFound);
+                return new ErrorDataResult<NoDataDto>(400,Messages.IdNotFound);
             }
             _genericRepository.Remove(deletedEntity);
             await _unitOfWork.CommitAsync();
@@ -107,7 +107,7 @@ namespace Bank.Service.ApplicationServices.Concrete
             var isExistEntity = await _genericRepository.GetByIdAsync(id);
             if (isExistEntity == null)
             {
-                return new ErrorDataResult<NoDataDto>(404, Messages.IdNotFound);
+                return new ErrorDataResult<NoDataDto>(400, Messages.IdNotFound);
             }
             var updatedEntity = ObjectMapper.Mapper.Map<Customer>(entity);
             _genericRepository.Update(updatedEntity);

@@ -19,7 +19,6 @@ namespace Bank.DataAccess.EntityFramework.Configurations
             builder.Property(e => e.FirstName).HasMaxLength(50);
             builder.Property(e => e.FirstName).IsRequired();
             builder.Property(e => e.LastName).HasMaxLength(50);
-            builder.Property(e => e.Gender).IsRequired();
             builder.Property(e => e.Age).IsRequired();
         }
     }

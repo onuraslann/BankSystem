@@ -11,13 +11,61 @@ namespace Bank.WebApi.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-        private readonly IServiceGeneric<Employee, EmployeeVM> _employeService;
         private readonly IEmployeeAS _employeeAS;
-        public EmployeesController(IServiceGeneric<Employee, EmployeeVM> employeService, IEmployeeAS employeeAS)
+
+        public EmployeesController(IEmployeeAS employeeAS)
         {
-            _employeService = employeService;
             _employeeAS = employeeAS;
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> GetEmployeeList()
+        {
+
+            var result = await _employeeAS.GetAllAsync();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SetEmployee([FromBody] EmployeeVM employeeVM)
+        {
+
+            var result = await _employeeAS.AddAsync(employeeVM);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateEmployee([FromBody] EmployeeVM employeeVM,int id)
+        {
+
+            var result = await _employeeAS.Update(employeeVM,id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> UpdateEmployee([FromBody] KeyVM keyVM)
+        {
+
+            var result = await _employeeAS.Remove(keyVM.Id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }

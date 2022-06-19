@@ -32,6 +32,7 @@ namespace Bank.Service.DependenyRegistryModule.Autofac
             //AS
             builder.RegisterType<CustomerAS>().As<ICustomerAS>().SingleInstance();
             builder.RegisterType<EmployeeAS>().As<IEmployeeAS>().SingleInstance();
+            builder.RegisterType<CreditAS>().As<ICreditAS>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

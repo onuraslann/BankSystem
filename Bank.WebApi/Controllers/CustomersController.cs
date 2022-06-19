@@ -46,9 +46,9 @@ namespace Bank.WebApi.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> UpdateCustomer([FromBody] CustomerVM customerVM)
+        public async Task<IActionResult> UpdateCustomer([FromBody] CustomerVM customerVM,int id)
         {
-            var deleteCustomer = await _customerAS.Update(customerVM, customerVM.Id);
+            var deleteCustomer = await _customerAS.Update(customerVM, id);
             if (deleteCustomer.Success)
             {
                 return Ok(deleteCustomer);
