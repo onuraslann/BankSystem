@@ -15,5 +15,7 @@ namespace Bank.Service.ApplicationServices.Abstract
 
         Task<IDataResult<GetListCreditVM>>GetAsync(int id);
         Task<IDataResult<NoDataDto>> DeleteAsync(int id);
+
+        Task<IDataResult<NoDataDto>> UpdateAsync(UpdateCreditVM updateCreditVM,int id);
     }
 }

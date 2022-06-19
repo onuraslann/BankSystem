@@ -45,7 +45,7 @@ namespace Bank.WebApi.Controllers
 
         }
 
-        [HttpDelete]
+        [HttpPut]
         public async Task<IActionResult> UpdateCustomer([FromBody] CustomerVM customerVM,int id)
         {
             var deleteCustomer = await _customerAS.Update(customerVM, id);
@@ -56,7 +56,7 @@ namespace Bank.WebApi.Controllers
             return BadRequest(deleteCustomer);
         }
 
-        [HttpPut]
+        [HttpDelete]
         public async Task<IActionResult> DeleteCustomer([FromBody] KeyVM keyVM)
         {
             var deleteCustomer = await _customerAS.Remove(keyVM.Id);

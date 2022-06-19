@@ -64,5 +64,22 @@ namespace Bank.Service.ApplicationServices.Concrete
             await _unitOfWork.CommitAsync();
             return new SuccessDataResult<NoDataDto>(204);
         }
+
+        public async Task<IDataResult<NoDataDto>> UpdateAsync(UpdateCreditVM updateCreditVM,int id)
+        {
+            var updatedModel = _genericRepository.Where(x=>x.Id==id).SingleOrDefault();
+            
+            if (updatedModel == null)
+            {
+                return new ErrorDataResult<NoDataDto>(404,Messages.IdNotFound);
+            }
+            updatedModel.CreditType=string.IsNullOrEmpty(updateCreditVM.CreditType.Trim()) ? updatedModel.CreditType:updateCreditVM.CreditType;
+            updatedModel.MaxBudget = updateCreditVM.MaxBudget;
+            updatedModel.MinBudget = updateCreditVM.MinBudget;
+            updatedModel.MinLoanterm = updateCreditVM.MinLoanterm;
+            _genericRepository.Update(updatedModel);
+            await _unitOfWork.CommitAsync();
+            return new SuccessDataResult<NoDataDto>(204);
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace Bank.WebApi.Controllers
             return BadRequest(listModel);
         }
         [HttpDelete]
-        public async Task<IActionResult> DeleteCredit(KeyVM keyVM)
+        public async Task<IActionResult> DeleteCredit([FromBody]KeyVM keyVM)
         {
 
             var deletedModel = await _creditAs.DeleteAsync(keyVM.Id);
@@ -46,6 +46,17 @@ namespace Bank.WebApi.Controllers
                 return Ok(deletedModel);
             }
             return BadRequest(deletedModel);
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdateCredit([FromBody]UpdateCreditVM updateCreditVM, int id)
+        {
+
+            var updatedModel = await _creditAs.UpdateAsync(updateCreditVM, id);
+            if (updatedModel.Success)
+            {
+                return Ok(updatedModel);
+            }
+            return BadRequest(updatedModel);
         }
     }
 }
