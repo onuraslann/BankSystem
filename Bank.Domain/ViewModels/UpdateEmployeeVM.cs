@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace Bank.Domain.ViewModels
 {
-    public class EmployeeVM:IViewModel
+    public class UpdateEmployeeVM:IViewModel
     {
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Gender { get; set; }
         public int Age { get; set; }
         public Nullable<Double> Wage { get; set; }
-        public  bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; } = true;
     }
 }

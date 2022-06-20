@@ -45,7 +45,7 @@ namespace Bank.WebApi.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdateEmployee([FromBody] EmployeeVM employeeVM,int id)
+        public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployeeVM employeeVM,int id)
         {
 
             var result = await _employeeAS.Update(employeeVM,id);

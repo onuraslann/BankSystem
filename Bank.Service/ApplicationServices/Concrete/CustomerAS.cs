@@ -29,11 +29,11 @@ namespace Bank.Service.ApplicationServices.Concrete
         public async Task<IDataResult<CustomerVM>> AddAsync(CustomerVM entity)
         {
             ValidateData(entity);
-            var newEntity = ObjectMapper.Mapper.Map<Customer>(entity);
-            await _genericRepository.AddAsync(newEntity);
+           var addedEntity = ObjectMapper.Mapper.Map<Customer>(entity);
+            await _genericRepository.AddAsync(addedEntity);
             await _unitOfWork.CommitAsync();
-            var newDto = ObjectMapper.Mapper.Map<CustomerVM>(newEntity);
-            return new SuccessDataResult<CustomerVM>(newDto,200,Messages.CustomerAdded);
+            var newDto = ObjectMapper.Mapper.Map<CustomerVM>(addedEntity);
+            return new SuccessDataResult<CustomerVM>(newDto, 200, Messages.CustomerAdded);
         }
 
         public async Task<IDataResult<IEnumerable<GetListCustomerVM>>> GetAllAsync()

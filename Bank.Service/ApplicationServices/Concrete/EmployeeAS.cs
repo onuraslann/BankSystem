@@ -26,11 +26,24 @@ namespace Bank.Service.ApplicationServices.Concrete
 
         public async Task<IDataResult<EmployeeVM>> AddAsync(EmployeeVM entity)
         {
-            var adddedEntity = ObjectMapper.Mapper.Map<Employee>(entity);
-            await _genericRepository.AddAsync(adddedEntity);
+            var addedEmployee = _genericRepository.Where(x => x.FirstName==entity.FirstName).SingleOrDefault();
+            if (addedEmployee == null)
+            {
+                addedEmployee = new Employee();
+                addedEmployee.FirstName = entity.FirstName;
+                addedEmployee.LastName = entity.LastName;
+                addedEmployee.Gender = entity.Gender;
+                addedEmployee.Age = entity.Age;
+                addedEmployee.Wage = entity.Wage;
+
+            }
+         
+      
+            await _genericRepository.AddAsync(addedEmployee);
             await _uow.CommitAsync();
-            var newDto = ObjectMapper.Mapper.Map<EmployeeVM>(entity);
-            return new SuccessDataResult<EmployeeVM>(newDto, 200,Messages.EmployeeAdded);
+            return new SuccessDataResult<EmployeeVM>( 200, Messages.EmployeeAdded);
+
+      
         }
 
         public async Task<IDataResult<IEnumerable<GetEmployeeListVM>>> GetAllAsync()
@@ -52,17 +65,22 @@ namespace Bank.Service.ApplicationServices.Concrete
             return new SuccessDataResult<NoDataDto>(204, Messages.EmployeeDelete);
         }
 
-        public  async Task<IDataResult<NoDataDto>> Update(EmployeeVM entity, int id)
+        public  async Task<IDataResult<NoDataDto>> Update(UpdateEmployeeVM entity, int id)
         {
-            var employeeExist = await _genericRepository.GetByIdAsync(id);
-            if (employeeExist == null)
+            var employeExist =  _genericRepository.Where(x => x.Id == id).SingleOrDefault();
+            if(employeExist == null)
             {
-                return new ErrorDataResult<NoDataDto>(404, Messages.IdNotFound);
+                return new ErrorDataResult<NoDataDto>(404);
             }
-            var updateEntity = ObjectMapper.Mapper.Map<Employee>(entity);
-            _genericRepository.Update(updateEntity);
+            employeExist.FirstName=string.IsNullOrEmpty(entity.FirstName.Trim()) ?  employeExist.FirstName:entity.FirstName;
+            employeExist.LastName = string.IsNullOrEmpty(entity.LastName.Trim()) ? employeExist.LastName : entity.LastName;
+            employeExist.Age = entity.Age;
+            employeExist.Wage = entity.Wage;
+            employeExist.IsActive = entity.IsActive;
+             _genericRepository.Update(employeExist);
             await _uow.CommitAsync();
-            return new SuccessDataResult<NoDataDto>( 204, Messages.EmployeeUpdate);
+            return new SuccessDataResult<NoDataDto>(204);
+
         }
     }
 }

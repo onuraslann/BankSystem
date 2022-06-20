@@ -16,6 +16,6 @@ namespace Bank.Service.ApplicationServices.Abstract
 
         Task<IDataResult<NoDataDto>> Remove(int id);
 
-        Task<IDataResult<NoDataDto>> Update(EmployeeVM entity, int id);
+        Task<IDataResult<NoDataDto>> Update(UpdateEmployeeVM entity, int id);
     }
 }
